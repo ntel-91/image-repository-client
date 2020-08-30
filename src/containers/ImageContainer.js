@@ -94,6 +94,26 @@ const ImageContainer = ({ isVisible, showSideBar }) => {
             img_url: 'https://react.semantic-ui.com/images/wireframe/image.png',
             title: 'TEST'
         },
+        { 
+            id: 17,
+            img_url: 'https://react.semantic-ui.com/images/wireframe/image.png',
+            title: 'TEST'
+        },
+        { 
+            id: 18,
+            img_url: 'https://react.semantic-ui.com/images/wireframe/image.png',
+            title: 'TEST'
+        },
+        { 
+            id: 19,
+            img_url: 'https://react.semantic-ui.com/images/wireframe/image.png',
+            title: 'TEST'
+        },
+        { 
+            id: 20,
+            img_url: 'https://react.semantic-ui.com/images/wireframe/image.png',
+            title: 'TEST'
+        }
     ]
     
     return (

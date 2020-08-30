@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Grid } from 'semantic-ui-react';
 import ImageContainer from './containers/ImageContainer';
 import NavBar from './components/NavBar';
 
 const App = () => {
-    const [visible, setVisible] = React.useState(false)
+    const [visible, setVisible] = useState(false)
     
+    // useEffect(() => {
+    //     set
+    // }, [])
+
     const showSideBar = () => {
         setVisible(!visible);
     }
 
     return (
-        <div>
+        <Grid>
             <NavBar showSideBar={showSideBar}/>
-            <ImageContainer isVisible={visible} showSideBar={showSideBar}/>
-        </div>
+            <Grid.Row>
+                <ImageContainer isVisible={visible} showSideBar={showSideBar}/>
+            </Grid.Row>
+        </Grid>
     );
 }
 
