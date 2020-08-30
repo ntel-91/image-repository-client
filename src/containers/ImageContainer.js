@@ -3,9 +3,6 @@ import Item from '../components/Item';
 import { 
     Container, 
     Grid, 
-    Checkbox, 
-    Image, 
-    Header, 
     Icon, 
     Menu,
     Segment,
@@ -118,39 +115,29 @@ const ImageContainer = ({ isVisible, showSideBar }) => {
     
     return (
         <Grid columns={1}>
-                {/* <Sidebar.Pushable > */}
-                    <Sidebar
-                        as={Menu}
-                        animation='overlay'
-                        icon='labeled'
-                        inverted
-                        onHide={() => showSideBar()}
-                        vertical
-                        visible={isVisible}
-                        width='thin'
-                    >
-                        <Menu.Item as='a'>
-                            <Icon name='home' />
-                            Home
-                        </Menu.Item>
-                        <Menu.Item as='a'>
-                            <Icon name='gamepad' />
-                            Games
-                        </Menu.Item>
-                        <Menu.Item as='a'>
-                            <Icon name='camera' />
-                            Channels
-                        </Menu.Item>
-                    </Sidebar>
+            <Sidebar
+                as={Menu}
+                animation='overlay'
+                icon='labeled'
+                inverted
+                onHide={() => showSideBar()}
+                vertical
+                visible={isVisible}
+                width='thin'
+            >
+                <Menu.Item as='a'>
+                    <Icon name='grid layout' />
+                    All Photos
+                </Menu.Item>
+                <Menu.Item as='a'>
+                    <Icon name='picture' />
+                    Albums
+                </Menu.Item>
+            </Sidebar>
 
-                    {/* <Sidebar.Pusher> */}
-                        <Segment basic>
-                        <Container style={{ margin: 20 }}>
-                            <Item images={images}/>
-                        </Container>
-                        </Segment>
-                    {/* </Sidebar.Pusher> */}
-                {/* </Sidebar.Pushable> */}
+                <Container style={{ margin: 20 }}>
+                    <Item images={images}/>
+                </Container>
         </Grid>
     )
 }
