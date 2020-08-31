@@ -6,8 +6,9 @@ const Item = ({ images }) => {
     function renderImages() {
         return images.map(image => {
             return (<Grid.Column key={image.id}>
+                {console.log(image.image)}
                 <Image
-                    src={image.img_url}
+                    src={`http://localhost:3000/${image.image}`}
                 />
             </Grid.Column>
             )

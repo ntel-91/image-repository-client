@@ -6,10 +6,16 @@ import NavBar from './components/NavBar';
 
 const App = () => {
     const [visible, setVisible] = useState(false)
+    const [images, setImages] = useState([])
     
-    // useEffect(() => {
-    //     set
-    // }, [])
+    useEffect(() => {
+        fetch('http://localhost:3000/items')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            setImages(data)
+        })
+    }, [])
 
     const showSideBar = () => {
         setVisible(!visible);
@@ -19,7 +25,11 @@ const App = () => {
         <Grid>
             <NavBar showSideBar={showSideBar}/>
             <Grid.Row>
-                <ImageContainer isVisible={visible} showSideBar={showSideBar}/>
+                <ImageContainer 
+                    isVisible={visible} 
+                    showSideBar={showSideBar}
+                    images={images}
+                />
             </Grid.Row>
         </Grid>
     );
