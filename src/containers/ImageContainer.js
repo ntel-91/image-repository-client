@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Item from '../components/Item';
 import { 
     Container, 
@@ -9,7 +9,15 @@ import {
     Sidebar 
 } from 'semantic-ui-react';
 
-const ImageContainer = ({ isVisible, showSideBar, images }) => {
+const ImageContainer = ({ isVisible, showSideBar, images, currentUser, selectImages, setImages }) => {
+
+    useEffect(() => {
+        fetch(`http://localhost:3000/api/v1/users/${currentUser.id}/items`)
+        .then(res => res.json())
+        .then(data => {
+            setImages(data)
+        })
+    }, [])
 
     return (
         <Grid columns={1}>
@@ -32,9 +40,11 @@ const ImageContainer = ({ isVisible, showSideBar, images }) => {
                     Albums
                 </Menu.Item>
             </Sidebar>
-
                 <Container style={{ margin: 20 }}>
-                    <Item images={images}/>
+                    <Item 
+                        images={images}
+                        selectImages={selectImages}
+                    />
                 </Container>
         </Grid>
     )

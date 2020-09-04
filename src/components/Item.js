@@ -1,16 +1,15 @@
 import React from 'react';
-import { Grid, Image } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
+import ImageItem from './ImageItem'
 
-const Item = ({ images }) => {
+const Item = ({ images, selectImages }) => {
 
     function renderImages() {
         return images.map(image => {
-            return (<Grid.Column key={image.id}>
-                {console.log(image.image)}
-                <Image
-                    src={`http://localhost:3000/${image.image}`}
-                />
-            </Grid.Column>
+            return (
+                <Grid.Column key={image.id}>
+                    <ImageItem image={image} selectImage={selectImages}/>
+                </Grid.Column>
             )
         })
     }
