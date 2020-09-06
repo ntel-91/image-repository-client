@@ -32,7 +32,7 @@ const LoginForm = (props) => {
             } else {
                 localStorage.setItem("token", response.token)
                 props.setUser(response.user)
-                props.history.push("/images")
+                props.history.push(`/images/${response.user.id}/items`)
             }
         })
     }

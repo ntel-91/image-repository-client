@@ -9,14 +9,15 @@ import {
     Sidebar
 } from 'semantic-ui-react';
 
-const ImageContainer = ({ currentUser, logOut }) => {
-
+const ImageContainer = (props) => {
+    // { currentUser, logOut }
     const [visible, setVisible] = useState(false);
     const [images, setImages] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]);
 
-    useEffect(() => {
-        fetch(`http://localhost:3000/api/v1/users/${currentUser.id}/items`)
+    useEffect(() => {  
+        const userId = props.match.params.id
+        fetch(`http://localhost:3000/api/v1/users/${userId}/items`)
         .then(res => res.json())
         .then(data => {
             setImages(data)
@@ -64,12 +65,13 @@ const ImageContainer = ({ currentUser, logOut }) => {
 
     return (
         <Grid>
+            {console.log("props ", props)}
             <NavBar
                 showSideBar={showSideBar}
                 uploadPhoto={uploadPhoto}
                 selectedImages={selectedImages}
                 deleteImages={deleteImages}
-                logOut={logOut}
+                logOut={props.logOut}
             />
             <Sidebar
                 as={Menu}

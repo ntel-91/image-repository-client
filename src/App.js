@@ -44,7 +44,8 @@ const App = (props) => {
         <Grid>
             <Switch>
                 <Grid.Row centered>
-                    <Route path="/images" render={(routerProps) => {
+                    {/* add params to images path */}
+                    <Route path="/images/:id/items" render={(routerProps) => {
                         return <ImageContainer 
                             setUser={setUser}
                             currentUser={currentUser}
