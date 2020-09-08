@@ -10,25 +10,32 @@ import {
 } from 'semantic-ui-react';
 
 const ImageContainer = (props) => {
-    // { currentUser, logOut }
     const [visible, setVisible] = useState(false);
     const [images, setImages] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]);
 
     useEffect(() => {  
         const userId = props.match.params.id
-        fetch(`http://localhost:3000/api/v1/users/${userId}/items`)
+        const token = localStorage.getItem("token")
+        fetch(`http://localhost:3000/api/v1/users/${userId}/items`, {
+            headers: {
+                "Authorization": token
+            }
+        })
         .then(res => res.json())
         .then(data => {
             setImages(data)
         })
     }, [])
 
-    const uploadPhoto = (fileData) => {
+    const uploadPhotos = (fileData) => {
         const formData = new FormData();
-        formData.append("file", fileData)
-
-        fetch('http://localhost:3000/api/v1/items', {
+        for (let i = 0; i < fileData.length; i++) {
+            formData.append("files[]", fileData[i], fileData[i].name)
+        }
+        
+        const userId = props.match.params.id
+        fetch(`http://localhost:3000/api/v1/users/${userId}/items`, {
             method: "POST",
             body: formData
         })
@@ -43,33 +50,64 @@ const ImageContainer = (props) => {
     }
 
     const selectImages = (imageId) => {
-        const images = [...selectedImages, imageId];
-        setSelectedImages(images);
+        if (selectedImages.includes(imageId)) {
+            const images = selectedImages.filter(id => id !== imageId);
+            setSelectedImages(images);
+        } else {
+            const images = [...selectedImages, imageId];
+            setSelectedImages(images);
+        }
     }
 
-    const deleteImages = (photos) => {
-        const photoId = photos[0]
-        fetch(`http://localhost:3000/api/v1/items/${photoId}`,{
-            method: 'DELETE'
+    const deleteImages = (images) => {
+        fetch(`http://localhost:3000/api/v1/removeitems`,{
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": "application/json"   
+            },
+            body: JSON.stringify({data: images})
         })
         .then(res => res.json())
         .then(res => {
             if (res.errors) {
-                alert(res.errors)
+                alert(res.errors);
             } else {
-                const updatedImages = images.filter(i => i.id !== photoId);
+                const updatedImages = images.filter(i => !images.includes(i.id));
                 setImages(updatedImages);
+                setSelectedImages([]);
+            }
+        })
+    }
+
+    const unlockImages = (images) => {
+        const userId = props.match.params.id
+        fetch(`http://localhost:3000/api/v1/users/${userId}/unlock`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": "application/json"
+            },
+            body: JSON.stringify({data: images})
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.errors) {
+                alert(response.errors);
+            } else {
+                setImages(response);
+                setSelectedImages([]);
             }
         })
     }
 
     return (
         <Grid>
-            {console.log("props ", props)}
             <NavBar
-                showSideBar={showSideBar}
-                uploadPhoto={uploadPhoto}
                 selectedImages={selectedImages}
+                showSideBar={showSideBar}
+                uploadPhotos={uploadPhotos}
+                unlockImages={unlockImages}
                 deleteImages={deleteImages}
                 logOut={props.logOut}
             />
@@ -92,12 +130,12 @@ const ImageContainer = (props) => {
                     Albums
                 </Menu.Item>
             </Sidebar>
-                <Container style={{ margin: 20 }}>
-                    <Item 
-                        images={images}
-                        selectImages={selectImages}
-                    />
-                </Container>
+            <Container style={{ margin: 20 }}>
+                <Item 
+                    images={images}
+                    selectImages={selectImages}
+                />
+            </Container>
         </Grid>
     )
 }

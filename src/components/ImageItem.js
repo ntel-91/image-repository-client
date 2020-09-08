@@ -29,7 +29,20 @@ const ImageItem = ({ image, selectImage}) => {
                     corner="top right" 
                     disabled={ isSelected ? false : true }
                     color='blue' 
-                    name={circleOutline} style={{ margin: 5 }}
+                    name={circleOutline} 
+                    style={{ margin: 5 }}
+                    />
+                :
+                    null
+                }
+
+                { !image.private ? 
+                    <Icon 
+                        name="unlock"
+                        color="grey"
+                        corner="bottom right"
+                        disabled
+                        style={{ margin: 5 }}
                     />
                 :
                     null

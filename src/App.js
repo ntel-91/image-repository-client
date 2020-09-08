@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom'
-import { Grid } from 'semantic-ui-react';
 import ImageContainer from './containers/ImageContainer';
-import NavBar from './components/NavBar';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 
@@ -11,7 +9,6 @@ const App = (props) => {
     const [currentUser, setCurrentUser] = useState(null);
     
     useEffect(() => {
-        console.log("APP USEEFFECT")
         const token = localStorage.getItem("token");
         if (token) 
             fetch('http://localhost:3000/api/v1/auto_login', {
@@ -41,27 +38,22 @@ const App = (props) => {
     }
 
     return (
-        <Grid>
-            <Switch>
-                <Grid.Row centered>
-                    {/* add params to images path */}
-                    <Route path="/images/:id/items" render={(routerProps) => {
-                        return <ImageContainer 
-                            setUser={setUser}
-                            currentUser={currentUser}
-                            {...routerProps}
-                            logOut={logOut}
-                        />
-                    }} />
-                    <Route path="/signup" render={(routerProps) => {
-                        return <SignUpForm setUser={setUser} {...routerProps}/>
-                    }}/>    
-                    <Route path="/login" render={(routerProps) => {
-                        return <LoginForm setUser={setUser} {...routerProps}/>
-                    }}/>    
-                </Grid.Row>
-            </Switch>
-        </Grid>
+        <Switch>
+            <Route path="/users/:id/items" render={(routerProps) => {
+                return <ImageContainer 
+                    setUser={setUser}
+                    currentUser={currentUser}
+                    logOut={logOut}
+                    {...routerProps}
+                />
+            }} />
+            <Route path="/signup" render={(routerProps) => {
+                return <SignUpForm setUser={setUser} {...routerProps}/>
+            }}/>    
+            <Route path="/login" render={(routerProps) => {
+                return <LoginForm setUser={setUser} {...routerProps}/>
+            }}/>    
+        </Switch>
     );
 }
 

@@ -7,7 +7,7 @@ const Item = ({ images, selectImages }) => {
     function renderImages() {
         return images.map(image => {
             return (
-                <Grid.Column key={image.id}>
+                <Grid.Column width={4} key={image.id}>
                     <ImageItem image={image} selectImage={selectImages}/>
                 </Grid.Column>
             )

@@ -1,10 +1,14 @@
 import React from 'react';
 import { Grid, Menu, Icon } from 'semantic-ui-react';
 
-const NavBar = ({ showSideBar, uploadPhoto, selectedImages, deleteImages, logOut }) => {
+const NavBar = ({ showSideBar, uploadPhotos, selectedImages, unlockImages, deleteImages, logOut }) => {
 
     const handleImageChange = (e) => {
-        uploadPhoto(e.target.files[0])
+        uploadPhotos(e.target.files)
+    }
+
+    const handleUnlock = (images) => {
+        unlockImages(images)
     }
     
     
@@ -20,7 +24,9 @@ const NavBar = ({ showSideBar, uploadPhoto, selectedImages, deleteImages, logOut
                             <Icon name='upload'/>
                             Upload
                             <input
+                                id="fileInput"
                                 type="file"
+                                multiple
                                 // hidden
                                 name='newImage'
                                 accept='image/jpg'
@@ -29,6 +35,28 @@ const NavBar = ({ showSideBar, uploadPhoto, selectedImages, deleteImages, logOut
                                 // id="embedpollfileinput"
                             />
                         </Menu.Item>
+                        { selectedImages.length > 0 ? 
+                            <Menu.Item>
+                                <Icon 
+                                    onClick={() => {handleUnlock(selectedImages)}}
+                                    name="unlock"
+                                    style={{cursor:'pointer'}}
+                                />
+                            </Menu.Item>
+                        :
+                            null
+                        }
+                        { selectedImages.length > 0 ? 
+                            <Menu.Item>
+                                <Icon 
+                                    // onClick={() => {deleteImages(selectedImages)}}
+                                    name="lock"
+                                    style={{cursor:'pointer'}}
+                                />
+                            </Menu.Item>
+                        :
+                            null
+                        }
                         { selectedImages.length > 0 ?
                             <Menu.Item>
                                 <Icon 
