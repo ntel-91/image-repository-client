@@ -23,6 +23,7 @@ const NavBar = ({ showSideBar, uploadPhotos, selectedImages, unlockImages, delet
                         <Menu.Item>
                             <Icon name='upload'/>
                             Upload
+                            {/* <Input ... icon={<Icon name='delete' link onClick={this.handleDeleteClick}/>}/> */}
                             <input
                                 id="fileInput"
                                 type="file"

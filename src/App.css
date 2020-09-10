@@ -28,6 +28,12 @@
   color: #61dafb;
 }
 
+.ui.image.cardImg {
+  cursor:'pointer';
+  /* background-color:#3865FE; */
+  margin: 'auto'
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

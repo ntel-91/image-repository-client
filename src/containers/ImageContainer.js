@@ -33,7 +33,7 @@ const ImageContainer = (props) => {
         for (let i = 0; i < fileData.length; i++) {
             formData.append("files[]", fileData[i], fileData[i].name)
         }
-        
+
         const userId = props.match.params.id
         fetch(`http://localhost:3000/api/v1/users/${userId}/items`, {
             method: "POST",
@@ -59,44 +59,66 @@ const ImageContainer = (props) => {
         }
     }
 
-    const deleteImages = (images) => {
+    const deleteImages = (imagesRemove) => {
+        const imagesIds = imagesRemove
         fetch(`http://localhost:3000/api/v1/removeitems`,{
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
                 "Accepts": "application/json"   
             },
-            body: JSON.stringify({data: images})
+            body: JSON.stringify({data: imagesRemove})
         })
         .then(res => res.json())
         .then(res => {
             if (res.errors) {
                 alert(res.errors);
             } else {
-                const updatedImages = images.filter(i => !images.includes(i.id));
+                const updatedImages = images.filter(i => !imagesIds.includes(i.id));
+                debugger
                 setImages(updatedImages);
                 setSelectedImages([]);
             }
         })
     }
 
-    const unlockImages = (images) => {
+    // const unlockImages = (imagesUnlock) => {
+    //     const userId = props.match.params.id
+    //     fetch(`http://localhost:3000/api/v1/users/${userId}/unlock`, {
+    //         method: "PATCH",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Accepts": "application/json"
+    //         },
+    //         body: JSON.stringify({data: imagesUnlock})
+    //     })
+    //     .then(res => res.json())
+    //     .then(response => {
+    //         if (response.errors) {
+    //             alert(response.errors);
+    //         } else {
+    //             debugger
+    //             setImages(response);
+    //             setSelectedImages([]);
+    //         }
+    //     })
+    // }s
+
+    const unlockImages = (imageId) => {
         const userId = props.match.params.id
-        fetch(`http://localhost:3000/api/v1/users/${userId}/unlock`, {
+        fetch(`http://localhost:3000/api/v1/users/${userId}/items/${imageId}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 "Accepts": "application/json"
-            },
-            body: JSON.stringify({data: images})
+            }
         })
         .then(res => res.json())
         .then(response => {
             if (response.errors) {
                 alert(response.errors);
             } else {
-                setImages(response);
-                setSelectedImages([]);
+                
             }
         })
     }
@@ -133,6 +155,7 @@ const ImageContainer = (props) => {
             <Container style={{ margin: 20 }}>
                 <Item 
                     images={images}
+                    unlockImages={unlockImages}
                     selectImages={selectImages}
                 />
             </Container>
