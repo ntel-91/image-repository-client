@@ -26,7 +26,7 @@ const ImageContainer = (props) => {
         .then(data => {
             setImages(data)
         })
-    }, [])
+    }, [props.match.params.id])
 
     const uploadPhotos = (fileData) => {
         const formData = new FormData();

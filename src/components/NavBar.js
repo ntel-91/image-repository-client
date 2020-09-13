@@ -1,7 +1,40 @@
-import React from 'react';
-import { Grid, Menu, Icon } from 'semantic-ui-react';
+import React, { useReducer, useCallback, useRef, useEffect } from 'react';
+import { Grid, Menu, Icon, Search } from 'semantic-ui-react';
+import _ from 'lodash'
+import faker from 'faker'
+
+const source = _.times(5, () => ({
+    title: faker.company.companyName(),
+    description: faker.company.catchPhrase(),
+    image: faker.internet.avatar(),
+    price: faker.finance.amount(0, 100, 2, '$'),
+}))
+
+const initialState = {
+    loading: false,
+    results: [],
+    value: '',
+}
+
+function exampleReducer(state, action) {
+    switch (action.type) {
+      case 'CLEAN_QUERY':
+        return initialState
+      case 'START_SEARCH':
+        return { ...state, loading: true, value: action.query }
+      case 'FINISH_SEARCH':
+        return { ...state, loading: false, results: action.results }
+      case 'UPDATE_SELECTION':
+        return { ...state, value: action.selection }
+  
+      default:
+        throw new Error()
+    }
+}
 
 const NavBar = ({ showSideBar, uploadPhotos, selectedImages, unlockImages, deleteImages, logOut }) => {
+    const [state, dispatch] = useReducer(exampleReducer, initialState)
+    const { loading, results, value } = state
 
     const handleImageChange = (e) => {
         uploadPhotos(e.target.files)
@@ -10,6 +43,33 @@ const NavBar = ({ showSideBar, uploadPhotos, selectedImages, unlockImages, delet
     const handleUnlock = (images) => {
         unlockImages(images)
     }
+
+    const timeoutRef = useRef()
+    const handleSearchChange = useCallback((e, data) => {
+        clearTimeout(timeoutRef.current)
+        dispatch({ type: 'START_SEARCH', query: data.value })
+    
+        timeoutRef.current = setTimeout(() => {
+            if (data.value.length === 0) {
+                dispatch({ type: 'CLEAN_QUERY' })
+                return
+            }
+    
+            const re = new RegExp(_.escapeRegExp(data.value), 'i')
+            const isMatch = (result) => re.test(result.title)
+    
+            dispatch({
+                type: 'FINISH_SEARCH',
+                results: _.filter(source, isMatch),
+            })
+        }, 300)
+        }, [])
+
+    useEffect(() => {
+        return () => {
+          clearTimeout(timeoutRef.current)
+        }
+      }, [])
     
     
     return (
@@ -20,6 +80,19 @@ const NavBar = ({ showSideBar, uploadPhotos, selectedImages, unlockImages, delet
                         <Icon name='sidebar'/>
                     </Menu.Item>
                     <Menu.Menu position="right">
+                        <Menu.Item> 
+                            <Grid.Column width={6}>
+                                <Search
+                                    loading={loading}
+                                    onResultSelect={(e, data) =>
+                                        dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
+                                    }
+                                    onSearchChange={handleSearchChange}
+                                    results={results}
+                                    value={value}
+                                />
+                            </Grid.Column>
+                            </Menu.Item>
                         <Menu.Item>
                             <Icon name='upload'/>
                             Upload

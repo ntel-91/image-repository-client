@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import _ from 'lodash'
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 const LoginForm = (props) => {

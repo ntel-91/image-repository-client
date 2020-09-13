@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import _ from 'lodash'
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 const SignUpForm = (props) => {
@@ -36,7 +35,7 @@ const SignUpForm = (props) => {
             } else {
                 localStorage.setItem("token", response.token)
                 props.setUser(response.user)
-                props.history.push("/images")
+                props.history.push(`/users/${response.user.id}/items`)
             }
         })
     }

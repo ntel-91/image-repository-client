@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Card } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 import ImageItem from './ImageItem'
 
 const Item = ({ images, selectImages, unlockImages }) => {
