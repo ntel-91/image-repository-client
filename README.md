@@ -27,7 +27,7 @@ This app is an image repository that lets you upload and store your photos in on
 
 # Getting Started
 
-Please find the repo for the backend at [Image-Repository-Server](https://github.com/ntel-91/image-repository-API). You'll first need to follow the instructions on the README for the API in order to spin up the server and seed some starter photos and user account. Note: the API calls require you to start the Rails server on port 3001 to communicate with the front end `rails s -p 3001`
+Please find the repo for the backend at [Image-Repository-Server](https://github.com/ntel-91/image-repository-API). You'll first need to follow the instructions on the README for the API in order to spin up the server and seed some starter photos and user account. Note: the API calls require you to start the Rails server on port 3000 to communicate with the front end `rails s -p 3000`
 
 ## Prerequisites 
 
