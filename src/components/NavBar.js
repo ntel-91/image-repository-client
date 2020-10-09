@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useReducer, useCallback, useRef, useEffect } from 'react';
 import { Grid, Menu, Icon, Search } from 'semantic-ui-react';
 import _ from 'lodash'
 import faker from 'faker'
@@ -14,6 +14,16 @@ const initialState = {
     loading: false,
     results: [],
     value: '',
+}
+
+const getUsers = () => {
+    let users;
+    fetch('http://localhost:3000/api/v1/users')
+    .then(res => res.json())
+    .then(data => {
+        users = data
+    })
+    debugger
 }
 
 function exampleReducer(state, action) {
@@ -32,8 +42,9 @@ function exampleReducer(state, action) {
     }
 }
 
-const NavBar = ({ showSideBar, uploadPhotos, selectedImages, unlockImages, deleteImages, logOut }) => {
+const NavBar = ({ showSideBar, uploadPhotos, selectedImages, unlockImages, deleteImages, logOut, allUsers }) => {
     const [state, dispatch] = useReducer(exampleReducer, initialState)
+    const [users, setUsers] = useState(allUsers)
     const { loading, results, value } = state
 
     const handleImageChange = (e) => {
@@ -44,32 +55,39 @@ const NavBar = ({ showSideBar, uploadPhotos, selectedImages, unlockImages, delet
         unlockImages(images)
     }
 
-    const timeoutRef = useRef()
-    const handleSearchChange = useCallback((e, data) => {
-        clearTimeout(timeoutRef.current)
-        dispatch({ type: 'START_SEARCH', query: data.value })
     
-        timeoutRef.current = setTimeout(() => {
-            if (data.value.length === 0) {
-                dispatch({ type: 'CLEAN_QUERY' })
-                return
-            }
-    
-            const re = new RegExp(_.escapeRegExp(data.value), 'i')
-            const isMatch = (result) => re.test(result.title)
-    
-            dispatch({
-                type: 'FINISH_SEARCH',
-                results: _.filter(source, isMatch),
-            })
-        }, 300)
-        }, [])
+        fetch('http://localhost:3000/api/v1/users')
+        .then(res => res.json())
+        .then(data => {
+            setUsers(data)
+        })
 
-    useEffect(() => {
-        return () => {
-          clearTimeout(timeoutRef.current)
-        }
-      }, [])
+    // const timeoutRef = useRef()
+    // const handleSearchChange = useCallback((e, data) => {
+    //     clearTimeout(timeoutRef.current)
+    //     dispatch({ type: 'START_SEARCH', query: data.value })
+    
+    //     timeoutRef.current = setTimeout(() => {
+    //         if (data.value.length === 0) {
+    //             dispatch({ type: 'CLEAN_QUERY' })
+    //             return
+    //         }
+
+    //         const re = new RegExp(_.escapeRegExp(data.value), 'i')
+    //         const isMatch = (result) => re.test(result.username)
+    //         debugger
+    //         dispatch({
+    //             type: 'FINISH_SEARCH',
+    //             results: _.filter(users, isMatch),
+    //         })
+    //     }, 300)
+    //     }, [])
+
+    // useEffect(() => {
+    //     return () => {
+    //       clearTimeout(timeoutRef.current)
+    //     }
+    //   }, [])
     
     
     return (
@@ -80,19 +98,19 @@ const NavBar = ({ showSideBar, uploadPhotos, selectedImages, unlockImages, delet
                         <Icon name='sidebar'/>
                     </Menu.Item>
                     <Menu.Menu position="right">
-                        <Menu.Item> 
+                        {/* <Menu.Item> 
                             <Grid.Column width={6}>
                                 <Search
                                     loading={loading}
                                     onResultSelect={(e, data) =>
-                                        dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
+                                        dispatch({ type: 'UPDATE_SELECTION', selection: data.result.username })
                                     }
                                     onSearchChange={handleSearchChange}
                                     results={results}
                                     value={value}
                                 />
                             </Grid.Column>
-                            </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item>
                             <Icon name='upload'/>
                             Upload

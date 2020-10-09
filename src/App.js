@@ -7,7 +7,7 @@ import LoginForm from './components/LoginForm';
 
 const App = (props) => {
     const [currentUser, setCurrentUser] = useState(null);
-    const [users, setUsers] = useState([])
+    const [allUsers, setAllUsers] = useState([])
     
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -30,7 +30,7 @@ const App = (props) => {
         fetch('http://localhost:3000/api/v1/users')
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            setAllUsers(data)
         })
     }, [])
 
@@ -50,6 +50,7 @@ const App = (props) => {
                 return <ImageContainer 
                     setUser={setUser}
                     currentUser={currentUser}
+                    allUsers={allUsers}
                     logOut={logOut}
                     {...routerProps}
                 />

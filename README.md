@@ -1,69 +1,51 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Image Repository
 
-## Available Scripts
+<!-- ![](./src/images/.png) -->
+_Developed by Nick Telenson_ 
 
-In the project directory, you can run:
+This app is an image repository that lets you upload and store your photos in one place. You have the ability to create an account, upload photos, and share photos by marking public or private.
 
-### `yarn start`
+## Table of Contents
+* [Features](#features)
+* [Getting Started](#getting-started)
+* [Preview](#preview)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Features
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+* Users are authenticated and authorized according to role level using JSON web tokens, local storage, and bcrypt
+* Utilizes React frontend framework along with React Hooks and React Router
+* Rails REST API backend 
+* Integrates the Semantic React UI library for a streamlined minimalist design. 
 
-### `yarn test`
+## Built With
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* React/React Hooks
+* JavaScript
+* Ruby on Rails API
+* Semantic React UI
+* HTML5 and CSS
 
-### `yarn build`
+# Getting Started
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Please find the repo for the backend at [Image-Repository-Server](https://github.com/ntel-91/image-repository-API). You'll first need to follow the instructions on the README for the API in order to spin up the server and seed some starter photos and user account. Note: the API calls require you to start the Rails server on port 3001 to communicate with the front end `rails s -p 3001`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Prerequisites 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Clone down this repo and after you have the backend cloned and the server running, install the associated dependencies with either `npm install` 
 
-### `yarn eject`
+Then you can start running the program with `npm start`.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Change the url address to: http://localhost:3001/login.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## NPM Packages
+  * moment
+  * react-dom
+  * react-router-dom
+  * semantic-ui-react
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<!-- ![]() -->
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<!-- ## Acknowledgments -->
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# image-repository-client

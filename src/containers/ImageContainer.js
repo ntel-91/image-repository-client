@@ -131,6 +131,7 @@ const ImageContainer = (props) => {
                 uploadPhotos={uploadPhotos}
                 unlockImages={unlockImages}
                 deleteImages={deleteImages}
+                allUsers={props.allUsers}
                 logOut={props.logOut}
             />
             <Sidebar
